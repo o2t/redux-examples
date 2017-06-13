@@ -6,27 +6,24 @@ import {
 } from '../constants';
 
 const teamReducer = handleActions({
-  REQUEST_PLAYER_TEAM_DATA: (state) => {
-    return Object.assign({}, state, {
-      teamInfo: null,
-      isFetching: true,
-      hasError: false
-    });
-  },
-  REQUEST_PLAYER_TEAM_DATA_SUCCESS: (state, action) => {
-    return Object.assign({}, state, {
-      teamInfo: action.payload,
-      isFetching: false,
-      hasError: false
-    });
-  },
-  REQUEST_PLAYER_TEAM_DATA_ERROR: (state) => {
-    return Object.assign({}, state, {
-      teamInfo: null,
-      isFetching: false,
-      hasError: true
-    });
-  }
+  REQUEST_PLAYER_TEAM_DATA: (state) => ({
+    ...state,
+    teamInfo: null,
+    isFetching: true,
+    hasError: false
+  }),
+  REQUEST_PLAYER_TEAM_DATA_SUCCESS: (state, action) => ({
+    ...state,
+    teamInfo: action.payload,
+    isFetching: false,
+    hasError: false
+  }),
+  REQUEST_PLAYER_TEAM_DATA_ERROR: (state) => ({
+    ...state,
+    teamInfo: null,
+    isFetching: false,
+    hasError: true
+  })
 }, {
   isFetching: false,
   teamInfo: null,

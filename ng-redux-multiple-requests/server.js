@@ -15,7 +15,7 @@ app.use('/api', proxy(url.parse('http://www.nhl.com/stats/rest/grouped/skaters/s
 app.use('/api2', proxy(url.parse('http://www.nhl.com/stats/rest/grouped/teams/season/teamsummary?cayenneExp=seasonId=20142015%20and%20gameTypeId=2')));
 
 app.get('/*', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/src/index.html');
 });
 
 var server = new WebpackDevServer(webpack(config), {

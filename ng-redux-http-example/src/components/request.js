@@ -6,10 +6,16 @@ class RequestController {
     let unsubscribe = $ngRedux.connect(state => ({
       isFetching: state.posts.isFetching,
       error: state.posts.error,
-      posts: state.posts.data
+      posts: state.posts.data,
+      feed: state.posts.feed
     }))(this);
 
     $scope.$on('$destroy', unsubscribe);
+    $scope.$watch('request.feed', (newv, oldv) => {
+      console.log(`new feed value: ${newv}, old value : ${oldv}`);
+      requestActions.doNothing()
+      //requestActions.changeFeed ({ feed: this.feed + "x" })
+    });
 
     this.loadPosts = requestActions.loadPosts;
     this.forceHttpError = requestActions.forceHttpError;
@@ -36,7 +42,7 @@ export default angular
               class="btn btn-primary"
               ng-class="{'btn-disabled': request.isFetching}"
               ng-disabled="request.isFetching"
-              ng-click="request.loadPosts()">
+              ng-click="request.loadPosts(request.feed)">
               Request Posts
               <img
                 ng-show="request.isFetching"

@@ -4,6 +4,30 @@ export const REQUEST_POSTS = 'REQUEST_POSTS';
 export const REQUEST_POSTS_SUCCESS = 'REQUEST_POSTS_SUCCESS';
 export const REQUEST_POSTS_ERROR = 'REQUEST_POSTS_ERROR';
 
+export const REQUEST2_POSTS = 'REQUEST2_POSTS';
+export const REQUEST2_POSTS_PENDING = 'REQUEST2_POSTS_PENDING';
+export const REQUEST2_POSTS_FULFILLED = 'REQUEST2_POSTS_FULFILLED';
+export const REQUEST2_POSTS_REJECTED = 'REQUEST2_POSTS_REJECTED';
+
+
+export const REQUEST_CHANGE_FEED = 'REQUEST_CHANGE_FEED';
+export const REQUEST_NOOP = 'REQUEST_NOOP';
+
+export function loadPosts2 ($http) {
+  return (reddit = "all") => {
+    return {
+      type: REQUEST2_POSTS,
+      payload: $http({
+        method: 'get',
+        url: `https://www.reddit.com/r/${reddit}.json`,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }).then(res => res.data)
+    }
+  }
+}
+
 export function loadPosts(reddit = 'all') {
   return {
     // Types of actions to emit before and after
@@ -35,13 +59,34 @@ export function forceHttpError() {
   };
 }
 
-export default function requestActions($ngRedux) {
+export function changeFeed (feed) {
+  return {
+    type: REQUEST_CHANGE_FEED,
+    payload: feed,
+    meta: {
+      debounce: {
+        time: 300
+      }
+    }
+  }
+}
+
+export function doNothing () {
+  return {
+    type: REQUEST_NOOP
+  }
+}
+
+export default function requestActions($ngRedux, $http) {
   let actionCreator = {
     loadPosts,
-    forceHttpError
+    loadPosts2: loadPosts2($http),
+    forceHttpError,
+    changeFeed,
+    doNothing
   };
 
   return bindActionCreators(actionCreator, $ngRedux.dispatch);
 }
 
-requestActions.$inject = ['$ngRedux'];
+requestActions.$inject = ['$ngRedux', '$http'];
