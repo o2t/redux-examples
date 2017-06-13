@@ -2,7 +2,7 @@
 export default function serviceMiddleware () {
   return ({ dispatch, getState }) => next => action => {
     const { payload } = action
-    if (! payload.service)
+    if (! payload.service || ! typeof payload.service === 'function')
       return next (action)
 
     next ({
@@ -10,26 +10,23 @@ export default function serviceMiddleware () {
       type: action.type + "_PENDING"
     })
 
+    const newAction = (rejected, result) => {
+      const a = {
+        ...action,
+        type: `${action.type}_${rejected ? "REJECTED" : "FULFILLED"}`,
+        payload: {
+          ...action.payload,
+          ...result
+        }
+      }
+
+      delete a.payload.service
+      return a
+    }
+
     const { instance, config } = payload.service
-    instance (config)
-      .then (({data}) => {
-        let a = {
-          ...action,
-          type: action.type + "_FULFILLED"
-        };
-
-        a.payload.data = data;
-        delete a.payload.service
-        return dispatch(a);
-      }, (error) => {
-        let a = {
-          ...action,
-          type: action.type + "_REJECTED"
-        };
-
-        a.payload.error = error;
-        delete a.payload.service
-        dispatch (a)
-      })
+    instance (config).then (
+      ({data}) => dispatch (newAction (false, { data })),
+      (error) => dispatch (newAction(true, { error })))
   }
 }
