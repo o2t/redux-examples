@@ -1,26 +1,23 @@
 import angular from 'angular';
 
 class FeedView {
-  constructor($scope, $ngRedux) {
-    let unsubscribe = $ngRedux.connect(state => ({
-      feed: state.posts.feed
-    }))(this);
-
-    $scope.$on('$destroy', unsubscribe);
+  constructor($scope) {
   }
 }
 
-FeedView.$inject = ['$scope', '$ngRedux'];
+FeedView.$inject = ['$scope'];
 
 export default angular
   .module('app.feedview', [])
-  .directive('httpFeedView', () => ({
-    restrict: 'E',
+  .component('httpFeedView', {
+    bindings: {
+      "feed": "<"
+    },
     template: `
       <p> ** {{feedView.feed}}</p>
     `,
     controller: 'FeedView',
     controllerAs: 'feedView'
-  }))
+  })
   .controller('FeedView', FeedView)
   .name;

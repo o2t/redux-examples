@@ -2,7 +2,7 @@ import angular from 'angular';
 
 class RequestController {
   constructor($scope, $ngRedux, requestActions) {
-
+    requestActions.doNothing ("init")
     let unsubscribe = $ngRedux.connect(state => ({
       isFetching: state.posts.isFetching,
       error: state.posts.error,
@@ -13,7 +13,7 @@ class RequestController {
     $scope.$on('$destroy', unsubscribe);
     $scope.$watch('request.feed', (newv, oldv) => {
       console.log(`new feed value: ${newv}, old value : ${oldv}`);
-      requestActions.doNothing()
+      requestActions.doNothing("watch")
       //requestActions.changeFeed ({ feed: this.feed + "x" })
     });
 

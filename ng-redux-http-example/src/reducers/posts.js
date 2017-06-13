@@ -1,6 +1,6 @@
 import {
   REQUEST_POSTS, REQUEST_POSTS_SUCCESS, REQUEST_POSTS_ERROR,
-  REQUEST_CHANGE_FEED,
+  REQUEST_CHANGE_FEED, REQUEST_NOOP,
   REQUEST2_POSTS, REQUEST2_POSTS_PENDING, REQUEST2_POSTS_FULFILLED, REQUEST2_POSTS_REJECTED
 } from '../actions/request';
 
@@ -34,6 +34,10 @@ export default function posts(state = INITIAL_STATE, action) {
       ...state,
       feed: payload.feed
     }),
+    [REQUEST_NOOP]: (state) => {
+      console.log (`noop ${payload}`)
+      return state
+    },
 
     [REQUEST2_POSTS_PENDING]: (state) => ({
       ...state,
@@ -49,7 +53,6 @@ export default function posts(state = INITIAL_STATE, action) {
       ...state,
       isFetching: false,
       error: payload.error
-
     }),
   };
 

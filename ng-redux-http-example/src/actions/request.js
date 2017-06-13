@@ -71,9 +71,10 @@ export function changeFeed (feed) {
   }
 }
 
-export function doNothing () {
+export function doNothing (payload) {
   return {
-    type: REQUEST_NOOP
+    type: REQUEST_NOOP,
+    payload
   }
 }
 

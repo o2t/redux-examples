@@ -1,31 +1,28 @@
 import angular from 'angular';
 
 class FeedEdit {
-  constructor($scope, $ngRedux, requestActions) {
-    let unsubscribe = $ngRedux.connect(state => ({
-      feed: state.posts.feed
-    }))(this);
-
-    $scope.$on('$destroy', unsubscribe);
-    this.requestActions = requestActions
+  constructor($scope) {
   }
 
-  updateFeed () {
-    this.requestActions.changeFeed ({ feed: this.feed });
+  inputChanged () {
+    this.onFeedChange ({ $event: this.feed})
   }
 }
 
-FeedEdit.$inject = ['$scope', '$ngRedux', 'requestActions'];
+FeedEdit.$inject = ['$scope'];
 
 export default angular
   .module('app.feededit', [])
-  .directive('httpFeedEdit', () => ({
-    restrict: 'E',
+  .component('httpFeedEdit', {
+    bindings: {
+      "feed": "<",
+      "onFeedChange": "&"
+    },
     template: `
-      <input type="text" ng-model="feedEdit.feed" placeholder="Feed" ng-change="feedEdit.updateFeed()">
+      <input type="text" ng-model="feedEdit.feed" ng-change="feedEdit.inputChanged()" placeholder="Feed">
     `,
     controller: 'FeedEdit',
     controllerAs: 'feedEdit'
-  }))
+  })
   .controller('FeedEdit', FeedEdit)
   .name;
