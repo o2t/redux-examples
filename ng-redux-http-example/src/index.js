@@ -3,6 +3,7 @@ import angular from 'angular';
 // redux
 import ngRedux from 'ng-redux';
 import rootReducer from './reducers';
+import services from './services';
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
 import createLogger from 'redux-logger';
@@ -23,15 +24,17 @@ export default angular
     ngRedux,
     components,
     actions,
-    middleware
+    middleware,
+    services
   ])
   .config(($ngReduxProvider) => {
     $ngReduxProvider.createStoreWith(rootReducer, [
       logger,
-      //promiseMiddleware,
       thunkMiddleware,
       'httpMiddleware',
-      createDebounce()
+      'serviceMiddleware',
+      createDebounce(),
+      promiseMiddleware(),
     ]);
   })
   .name;
