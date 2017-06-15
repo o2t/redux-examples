@@ -1,3 +1,4 @@
+import angular from 'angular'
 
 export default function serviceMiddleware () {
   return ({ dispatch, getState }) => next => action => {
@@ -24,9 +25,8 @@ export default function serviceMiddleware () {
       return a
     }
 
-    const { instance, config } = payload.service
-    instance (config).then (
-      ({data}) => dispatch (newAction (false, { data })),
-      (error) => dispatch (newAction(true, { error })))
+    payload.service (payload).then (
+      payload => dispatch (newAction (false, payload)),
+      error => dispatch (newAction(true, { error })))
   }
 }

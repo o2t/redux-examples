@@ -12,7 +12,9 @@
     "angular": "^1.4.5",
     "babel-core": "^5.8.24",
     "babel-loader": "^5.3.2",
+    "fbjs": "^0.9.0-alpha.2",
     "ng-redux": "^2.0.2",
+    "prop-types": "^15.5.10",
     "redux": "^2.0.0",
     "redux-debounced": "^0.4.0",
     "redux-logger": "^1.0.6",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "extract-text-webpack-plugin": "^0.8.2",
+    "fbjs-scripts": "^0.6.0-alpha.3",
     "webpack": "^1.12.1",
     "webpack-dev-server": "^1.10.1"
   }

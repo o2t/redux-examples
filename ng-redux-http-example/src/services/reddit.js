@@ -1,12 +1,12 @@
 export default function RedditPosts ($http) {
-  return ({ reddit = "all" }) => {
+  return ({ feed = "all" }) => {
     return $http({
       method: 'get',
-      url: `https://www.reddit.com/r/${reddit}.json`,
+      url: `https://www.reddit.com/r/${feed}.json`,
       headers: {
         'Content-Type': 'application/json',
       }
-    }).then(res => res.data)
+    }).then(response => ({ posts: response.data.data.children }))
   }
 }
 

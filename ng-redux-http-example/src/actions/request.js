@@ -15,20 +15,16 @@ export const REQUEST3_POSTS_FULFILLED = 'REQUEST3_POSTS_FULFILLED';
 export const REQUEST3_POSTS_REJECTED = 'REQUEST3_POSTS_REJECTED';
 
 
-export const REQUEST_CHANGE_FEED = 'REQUEST_CHANGE_FEED';
+export const REQUEST_CHANGE_FEED = 'feed.change';
 export const REQUEST_NOOP = 'REQUEST_NOOP';
 
 export function loadPosts3 (RedditPosts) {
-  return (reddit = "all") => {
+  return (feed = "all") => {
     return {
       type: REQUEST3_POSTS,
       payload: {
-        service: {
-          instance: RedditPosts,
-          config: {
-            reddit
-          }
-        }
+        feed,
+        service: RedditPosts
       }
     }
   }
@@ -96,7 +92,9 @@ export function changeFeed (feed) {
 export function doNothing (payload) {
   return {
     type: REQUEST_NOOP,
-    payload
+    payload: {
+      noop: payload,
+    }
   }
 }
 

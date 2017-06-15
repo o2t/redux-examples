@@ -36,7 +36,7 @@ export default function posts(state = INITIAL_STATE, action) {
       feed: payload.feed
     }),
     [REQUEST_NOOP]: (state) => {
-      console.log (`noop ${payload}`)
+      console.log (`noop ${payload.noop}`)
       return state
     },
 
@@ -48,7 +48,7 @@ export default function posts(state = INITIAL_STATE, action) {
     [REQUEST2_POSTS_FULFILLED]: (state) => ({
       ...state,
       isFetching: false,
-      data: payload.data.children
+      data: payload.posts.children
     }),
     [REQUEST2_POSTS_REJECTED]: (state) => ({
       ...state,
@@ -64,7 +64,7 @@ export default function posts(state = INITIAL_STATE, action) {
     [REQUEST3_POSTS_FULFILLED]: (state) => ({
       ...state,
       isFetching: false,
-      data: payload.data.children
+      data: payload.posts
     }),
     [REQUEST3_POSTS_REJECTED]: (state) => ({
       ...state,
