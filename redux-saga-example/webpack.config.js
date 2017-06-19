@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function getEntrySources(sources) {
   if (process.env.NODE_ENV !== 'production') {
-    sources.push('webpack-hot-middleware/client');
+    sources.push('webpack-hot-middlewares/client');
   }
 
   return sources;

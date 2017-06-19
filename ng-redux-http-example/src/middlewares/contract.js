@@ -4,7 +4,7 @@ const fail = (props, propName, componentName) => {
   return new Error(`Action ${componentName}: no such contract '${propName}'`)
 }
 
-export default function (contracts) {
+export default function (contracts = {}) {
   return () => next => action => {
     const { payload, type } = action
     if (!payload || !type)

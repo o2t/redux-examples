@@ -5,7 +5,6 @@ import ngRedux from 'ng-redux';
 import rootReducer from './reducers';
 import services from './services';
 import thunkMiddleware from 'redux-thunk';
-import promiseMiddleware from 'redux-promise-middleware';
 import createLogger from 'redux-logger';
 import contracts from './contracts'
 
@@ -17,9 +16,9 @@ const logger = createLogger({
 // angular
 import components from './components';
 import actions from './actions';
-import middleware from './middleware';
+import middleware from './middlewares';
 import createDebounce from 'redux-debounced';
-import createActionDBCMiddleware from './middleware/actiondbc';
+import createContractMiddleware from './middlewares/contract';
 
 export default angular
   .module('app', [
@@ -33,11 +32,9 @@ export default angular
     $ngReduxProvider.createStoreWith(rootReducer, [
       logger,
       thunkMiddleware,
-      'httpMiddleware',
       'serviceMiddleware',
-      createActionDBCMiddleware (contracts),
+      createContractMiddleware (contracts),
       createDebounce(),
-      promiseMiddleware(),
     ]);
   })
   .name;

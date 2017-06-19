@@ -17,7 +17,7 @@ class RequestController {
       //requestActions.changeFeed ({ feed: this.feed + "x" })
     });
 
-    this.loadPosts = requestActions.loadPosts3;
+    this.loadPosts = requestActions.loadPosts;
     this.forceHttpError = requestActions.forceHttpError;
   }
 }

@@ -13,11 +13,11 @@ const compiler = webpack(config);
 if (process.env.NODE_ENV !== 'production') {
   winston.info('Bundling webpack... Please wait.');
 
-  app.use(require('webpack-dev-middleware')(compiler, {
+  app.use(require('webpack-dev-middlewares')(compiler, {
     publicPath: config.output.publicPath,
   }));
 
-  app.use(require('webpack-hot-middleware')(compiler));
+  app.use(require('webpack-hot-middlewares')(compiler));
 }
 
 app.get('/', (req, res) => {
