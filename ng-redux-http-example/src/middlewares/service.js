@@ -1,17 +1,17 @@
 export default function serviceMiddleware () {
   return ({ dispatch }) => next => action => {
+    if (! action.service)
+      return next (action)
+
+    if (typeof action.service !== 'function') {
+      console.error("service prop must be a function")
+      return next (action)
+    }
+
     // clone the action and delete the service prop to avoid reentrance
     action = { ...action }
     const { service } = action
     delete action.service
-
-    if (! service)
-      return next (action)
-
-    if (typeof service !== 'function') {
-      console.error("service prop must be a function")
-      return next (action)
-    }
 
     const { payload, type } = action
     const optimisticAction = `${type}_PENDING`
